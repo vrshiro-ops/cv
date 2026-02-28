@@ -479,11 +479,19 @@
                 // update lang toggle button label
                 const toggle = document.getElementById('lang-toggle');
                 if (toggle) toggle.innerText = (lang === 'en') ? 'ES' : 'EN';
+                // persist selection
+                try { localStorage.setItem('cv_lang', lang); } catch(e){}
+                // update document language attribute
+                try { document.documentElement.lang = (lang === 'en') ? 'en' : 'es'; } catch(e){}
             }, 220);
         }
 
-        // initialize language on load
+        // initialize language on load (restore saved preference if any)
         document.addEventListener('DOMContentLoaded', function() {
+            try {
+                const saved = localStorage.getItem('cv_lang');
+                if (saved && (saved === 'en' || saved === 'es')) currentLang = saved;
+            } catch(e){}
             setLanguage(currentLang);
             const toggle = document.getElementById('lang-toggle');
             if (toggle) toggle.addEventListener('click', () => setLanguage(currentLang === 'en' ? 'es' : 'en'));
@@ -492,4 +500,3 @@
     </script>
 </body>
 </html>
-
