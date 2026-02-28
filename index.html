@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,10 +12,10 @@
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
         body {
             font-family: 'Roboto', sans-serif;
-            background-image: url('https://i.postimg.cc/Y9JqchT2/buenaa.jpg');
-            background-size: cover;
-            background-position: center;
-            color: #333;
+            /* slightly lighter dark gradient for better readability */
+            background: linear-gradient(180deg, #0b1224 0%, #122433 100%);
+            /* use dark page text by default for accessibility */
+            color: #0f1724;
             overflow-x: hidden;
         }
         .fade-in {
@@ -44,14 +44,16 @@
         }
         .card {
             border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(16, 24, 40, 0.12);
+            box-shadow: 0 10px 30px rgba(2,6,23,0.12);
             padding: 22px;
-            background-color: rgba(255, 255, 255, 0.88);
-            backdrop-filter: blur(6px);
-            border: 1px solid rgba(15, 23, 42, 0.04);
+            /* solid white cards for best contrast */
+            background-color: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.06);
             margin-top: 20px;
-            opacity: 0;
-            animation: fadeInSection 0.9s forwards;
+        }
+        /* ensure text inside cards is dark for contrast */
+        .card, .card h3, .card p, .card .card-body, .card .card-header {
+            color: #0f1724;
         }
         @keyframes fadeInSection {
             0% {
@@ -71,7 +73,7 @@
         }
         .card-body {
             font-size: 1rem;
-            color: #555;
+            color: #334155; /* darker text for readability */
         }
         @media (max-width: 640px) {
             body { background-size: cover; }
@@ -85,7 +87,7 @@
         .header {
             padding: 26px 18px 8px 18px;
             border-radius: 10px;
-            background: linear-gradient(90deg, rgba(37,99,235,0.08), rgba(75,139,190,0.04));
+            background: linear-gradient(90deg, rgba(59,130,246,0.06), rgba(99,102,241,0.04));
             margin-bottom: 14px;
         }
         .skills-tag {
@@ -94,6 +96,9 @@
             color: white;
             border-radius: 12px;
             font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
         .skills-tag:hover {
             background-color: #2563eb;
@@ -110,6 +115,29 @@
             transition: transform 0.3s ease, background-color 0.3s ease;
             box-shadow: 0 6px 18px rgba(37,99,235,0.18);
         }
+        .download-btn:focus {
+            outline: 3px solid rgba(99,102,241,0.3);
+            outline-offset: 3px;
+        }
+        .skip-link {
+            position: absolute;
+            left: -999px;
+            top: auto;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        }
+        .skip-link:focus {
+            left: 10px;
+            top: 10px;
+            width: auto;
+            height: auto;
+            background: #fff;
+            color: #000;
+            padding: 8px 12px;
+            border-radius: 6px;
+            z-index: 9999;
+        }
         /* language switch fade helper */
         .i18n-fade {
             transition: opacity 280ms ease, transform 280ms ease;
@@ -119,6 +147,30 @@
             transform: scale(1.1);
             background-color: #1d4ed8;
         }
+
+        .skills-tag svg {
+            width: 16px;
+            height: 16px;
+            flex: 0 0 16px;
+        }
+
+        /* colored variants for framework tags */
+        .skills-tag.tag-docker { background-color: #2496ED; color: #fff; }
+        .skills-tag.tag-fastapi { background-color: #00A3A3; color: #fff; }
+        .skills-tag.tag-pyside { background-color: #2b9348; color: #fff; }
+        .skills-tag.tag-laragon { background-color: #0b1224; color: #fff; }
+        .skills-tag.tag-laravel { background-color: #f13a3a; color: #fff; }
+
+        /* slightly different style for plain skill badges (lighter) */
+        .skills-tag.skill-plain { background-color: #4B8BBE; color: #fff; }
+
+        /* colored skill badges */
+        .skills-tag.tag-html { background-color: #E44D26; color: #fff; }
+        .skills-tag.tag-sql { background-color: #4479A1; color: #fff; }
+        .skills-tag.tag-python { background-color: #3776AB; color: #fff; }
+        .skills-tag.tag-c { background-color: #0f1724; color: #fff; }
+        .skills-tag.tag-embedded { background-color: #6B7280; color: #fff; }
+        .skills-tag.tag-php { background-color: #777BB4; color: #fff; }
         #scroll-to-top {
             position: fixed;
             bottom: 20px;
@@ -159,17 +211,18 @@
     </style>
 </head>
 
-<body class="bg-gray-100">
-    <div id="cv-container" class="max-w-4xl mx-auto mt-10 p-8 bg-white shadow-lg rounded-lg fade-in">
+<body>
+    <a href="#cv-container" class="skip-link">Skip to content</a>
+    <div id="cv-container" class="max-w-4xl mx-auto mt-10 p-8 bg-white shadow-lg rounded-lg fade-in" role="main" tabindex="-1" aria-label="Curriculum Vitae">
         <!-- Sección de Presentación -->
         <div class="flex items-start justify-between header">
             <div class="text-center">
-            <img class="w-40 h-40 mx-auto rounded-full border-4 border-blue-500 profile-image" src="https://i.postimg.cc/7LtYnZpB/foto.jpg" alt="Foto de perfil">
+            <img class="w-40 h-40 mx-auto rounded-full border-4 border-blue-500 profile-image" src="https://i.postimg.cc/T2SFSBgH/yo.jpg" alt="Foto de perfil">
             <h1 class="text-4xl font-bold mt-4 text-blue-600">Jose Francisco Treviño Garcia</h1>
             <p class="text-lg text-gray-600" data-i18n="header.subtitle">Mechatronics Engineer | Specialization in Mechatronic Systems and Industry 4.0</p>
             </div>
             <div class="flex items-center gap-2">
-                <button id="lang-toggle" class="download-btn" title="Change language">ES</button>
+                <button id="lang-toggle" class="download-btn" title="Change language" aria-label="Toggle language" aria-pressed="false">ES</button>
             </div>
         </div>
         
@@ -183,9 +236,9 @@
         <section class="card fade-in">
             <h2 class="section-title" data-i18n="section.education">Education</h2>
             <div class="card-body">
-                <h3 class="card-header">Tecnológico de Colima</h3>
-                <p class="text-gray-500">Mechatronics Engineer - 2025</p>
-                <p>Training in automation, robotics, and systems control, with a focus on developing technological solutions to optimize industrial processes.</p>
+                <h3 class="card-header" data-i18n="education.institution">Tecnológico de Colima</h3>
+                <p class="text-gray-500" data-i18n="education.degree">Mechatronics Engineer - 2025</p>
+                <p data-i18n="education.desc">Training in automation, robotics, and systems control, with a focus on developing technological solutions to optimize industrial processes.</p>
             </div>
         </section>   
 
@@ -193,12 +246,12 @@
         <section class="card fade-in">
             <h2 class="section-title" data-i18n="section.competencies">Competencies</h2>
             <ul class="mt-4 list-disc list-inside text-gray-700">
-                <li>Teamwork and communication skills</li>
-                <li>Design and control of automated systems</li>
-                <li>Handling of PLCs and industrial control systems</li>
-                <li>Experience with sensors</li>
-                <li>Programming in Python and C</li>
-                <li>Adaptability and willingness to learn new technologies</li>
+                <li data-i18n="competency.li1">Teamwork and communication skills</li>
+                <li data-i18n="competency.li2">Design and control of automated systems</li>
+                <li data-i18n="competency.li3">Handling of PLCs and industrial control systems</li>
+                <li data-i18n="competency.li4">Experience with sensors</li>
+                <li data-i18n="competency.li5">Programming in Python and C</li>
+                <li data-i18n="competency.li6">Adaptability and willingness to learn new technologies</li>
             </ul>
         </section>
 
@@ -210,13 +263,13 @@
                 <p class="text-gray-500" data-i18n="job.current.date">Since 15/09/2025 - Present</p>
                 <p data-i18n="job.current.desc">Installation and configuration of security and monitoring devices: GPS, DVRs and cameras; testing, commissioning and integration with remote monitoring systems.</p>
                 
-                <h3 class="card-header">Petroil</h3>
-                <p class="text-gray-500">Practicante - 03/02/2025</p>
-                <p>Installation of dispensers according to client requirements, verifying electrical, hydraulic, and control connections, and configuring parameters for proper operation.</p>
+                <h3 class="card-header" data-i18n="job.petroil.title">Petroil</h3>
+                <p class="text-gray-500" data-i18n="job.petroil.date">Intern - 03/02/2025</p>
+                <p data-i18n="job.petroil.desc">Installation of dispensers according to client requirements, verifying electrical, hydraulic, and control connections, and configuring parameters for proper operation.</p>
                 
-                <h3 class="card-header mt-4">Centro de Innovación y Manufactura (CIM)</h3>
-                <p class="text-gray-500">Prestamista social - 14/02/2024</p>
-                <p>Responsible for organizing and maintaining the workshop to ensure an efficient and safe working environment.</p>
+                <h3 class="card-header mt-4" data-i18n="job.cim.title">Centro de Innovación y Manufactura (CIM)</h3>
+                <p class="text-gray-500" data-i18n="job.cim.date">Workshop Assistant - 14/02/2024</p>
+                <p data-i18n="job.cim.desc">Responsible for organizing and maintaining the workshop to ensure an efficient and safe working environment.</p>
             </div>
         </section>
 
@@ -224,13 +277,41 @@
         <section class="card fade-in">
             <h2 class="section-title" data-i18n="section.skills">Skills</h2>
             <div class="flex flex-wrap gap-2">
-                <span class="skills-tag">HTML</span>
-                <span class="skills-tag">SQL</span>
-                <span class="skills-tag">Python</span>
-                <span class="skills-tag">Pyside</span>
-                <span class="skills-tag">C</span>
-                <span class="skills-tag">Embedded</span>
-                    <span class="skills-tag">PHP</span>
+                <span class="skills-tag tag-html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M4 3v18l8 2 8-2V3H4z" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"/></svg><span>HTML</span></span>
+                <span class="skills-tag tag-sql"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><ellipse cx="12" cy="12" rx="7" ry="4" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 12v3c0 2 3 3 7 3s7-1 7-3v-3" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>SQL</span></span>
+                <span class="skills-tag tag-python"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M12 2c2 0 4 1 5 3 1 2 0 4-1 5-1 1-3 2-4 2s-3-1-4-2c-1-1-2-3-1-5 1-2 3-3 5-3z" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Python</span></span>
+                
+                <span class="skills-tag tag-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke-width="1.2"/><text x="12" y="15" font-size="8" text-anchor="middle" fill="currentColor">C</text></svg><span>C</span></span>
+                <span class="skills-tag tag-embedded"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2" stroke-width="1.2"/><path d="M8 12h8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Embedded</span></span>
+                <span class="skills-tag tag-php"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><ellipse cx="12" cy="12" rx="8" ry="5.2" stroke-width="1.2"/><text x="12" y="15" font-size="6" text-anchor="middle" fill="currentColor">PHP</text></svg><span>PHP</span></span>
+            </div>
+        </section>
+
+        <!-- Frameworks / Tools -->
+        <section class="card fade-in">
+            <h2 class="section-title" data-i18n="section.frameworks">Frameworks & Tools</h2>
+            <div class="flex flex-wrap gap-2">
+                <span class="skills-tag tag-docker">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M3 7v10a2 2 0 0 0 2 2h14V7L12 3 3 7z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span data-i18n="framework.docker">Docker</span>
+                </span>
+
+                <span class="skills-tag tag-fastapi">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M13 11V3l7 4v6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 12l6-2v8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span data-i18n="framework.fastapi">FastAPI</span>
+                </span>
+
+                <span class="skills-tag tag-pyside">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 8h8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span data-i18n="framework.pyside">PySide</span>
+                </span>
+
+                
+
+                <span class="skills-tag tag-laravel">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7l3-7z" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span data-i18n="framework.laravel">Laravel</span>
+                </span>
             </div>
         </section>
 
@@ -238,26 +319,26 @@
         <section class="card fade-in">
             <h2 class="section-title" data-i18n="section.projects">Projects</h2>
             <div class="card-body">
-                <h3 class="card-header">Robotic Arm for Box Size Classification</h3>
-                <p>Design and programming of a robotic arm controlled by microcontrollers to classify boxes by size, using sensors to identify dimensions and automate the classification process.</p>
+                <h3 class="card-header" data-i18n="project.1.title">Robotic Arm for Box Size Classification</h3>
+                <p data-i18n="project.1.desc">Design and programming of a robotic arm controlled by microcontrollers to classify boxes by size, using sensors to identify dimensions and automate the classification process.</p>
                 
-                <h3 class="card-header mt-4">Standardization of Dispenser Installation</h3>
-                <p>The project involved creating and implementing a standardized process for dispenser installation, achieving greater efficiency, quality, and regulatory compliance.</p>
+                <h3 class="card-header mt-4" data-i18n="project.2.title">Standardization of Dispenser Installation</h3>
+                <p data-i18n="project.2.desc">The project involved creating and implementing a standardized process for dispenser installation, achieving greater efficiency, quality, and regulatory compliance.</p>
                 
-                <h3 class="card-header mt-4">Remote Monitoring of Environmental Conditions in Plants</h3>
-                <p>Development of a remote monitoring system for four plants, measuring humidity, temperature, and heat index. Data was integrated into an interactive graphical interface using PySide6, enabling real-time visualization and efficient environmental management.</p>
+                <h3 class="card-header mt-4" data-i18n="project.3.title">Remote Monitoring of Environmental Conditions in Plants</h3>
+                <p data-i18n="project.3.desc">Development of a remote monitoring system for four plants, measuring humidity, temperature, and heat index. Data was integrated into an interactive graphical interface using PySide6, enabling real-time visualization and efficient environmental management.</p>
                 
-                <h3 class="card-header mt-4">Design and Development of an Assisted Chair with Actuators</h3>
-                <p>Design and construction of a chair equipped with actuators controlled by an integrated button panel. The system allows the seat to lift, assisting people with reduced mobility in standing up.</p>
+                <h3 class="card-header mt-4" data-i18n="project.4.title">Design and Development of an Assisted Chair with Actuators</h3>
+                <p data-i18n="project.4.desc">Design and construction of a chair equipped with actuators controlled by an integrated button panel. The system allows the seat to lift, assisting people with reduced mobility in standing up.</p>
                 
-                <h3 class="card-header mt-4">Kitchen Safety System with Physical Emulation</h3>
-                <p>Development of a kitchen safety system using three sensors (gas, temperature, and smoke), an alarm, and actuators that respond automatically in emergencies to mitigate risks.</p>
+                <h3 class="card-header mt-4" data-i18n="project.5.title">Kitchen Safety System with Physical Emulation</h3>
+                <p data-i18n="project.5.desc">Development of a kitchen safety system using three sensors (gas, temperature, and smoke), an alarm, and actuators that respond automatically in emergencies to mitigate risks.</p>
                 
-                <h3 class="card-header mt-4">Temperature Control System for an Incubator with Lighting</h3>
-                <p>Implementation of a temperature control system for an incubator, using temperature sensors and a light bulb that regulates heat and light to maintain optimal conditions.</p>
+                <h3 class="card-header mt-4" data-i18n="project.6.title">Temperature Control System for an Incubator with Lighting</h3>
+                <p data-i18n="project.6.desc">Implementation of a temperature control system for an incubator, using temperature sensors and a light bulb that regulates heat and light to maintain optimal conditions.</p>
                 
-                <h3 class="card-header mt-4">Automation of Pneumatic Station with PLCs</h3>
-                <p>Automation project for a pneumatic station using programmable logic controllers (PLCs) to optimize the station's control and operation.</p>
+                <h3 class="card-header mt-4" data-i18n="project.7.title">Automation of Pneumatic Station with PLCs</h3>
+                <p data-i18n="project.7.desc">Automation project for a pneumatic station using programmable logic controllers (PLCs) to optimize the station's control and operation.</p>
             </div>
         </section>
 
@@ -268,25 +349,25 @@
                 <div class="flex items-center gap-4 bg-gray-50 p-4 rounded-lg shadow mb-4">
                     <img class="w-48 h-auto rounded-lg" src="https://i.postimg.cc/VkSd5ZBs/Certificado1.jpg" alt="Python Certificate">
                     <div>
-                        <h3 class="text-lg font-bold">Practical Qt/PySide Course: Graphical Interfaces with Python</h3>
-                        <p class="text-gray-500">Udemy - 2024</p>
-                        <p class="text-gray-700">Multiple graphical projects, developing interactive applications with an attractive visual interface.</p>
+                        <h3 class="text-lg font-bold" data-i18n="cert.1.title">Practical Qt/PySide Course: Graphical Interfaces with Python</h3>
+                        <p class="text-gray-500" data-i18n="cert.1.org">Udemy - 2024</p>
+                        <p class="text-gray-700" data-i18n="cert.1.desc">Multiple graphical projects, developing interactive applications with an attractive visual interface.</p>
                     </div>
                 </div>
                 <div class="flex items-center gap-4 bg-gray-50 p-4 rounded-lg shadow mb-4">
                     <img class="w-48 h-auto rounded-lg" src="https://i.postimg.cc/MKnWYMcd/Certificado2.jpg" alt="Python Certificate">
                     <div>
-                        <h3 class="text-lg font-bold">Python Without Borders: HTML, CSS, Flask, and MySQL</h3>
-                        <p class="text-gray-500">Udemy - 2024</p>
-                        <p class="text-gray-700">Comprehensive introduction to programming with Python and essential technologies such as HTML, CSS, MySQL, Flask, and RESTful APIs.</p>
+                        <h3 class="text-lg font-bold" data-i18n="cert.2.title">Python Without Borders: HTML, CSS, Flask, and MySQL</h3>
+                        <p class="text-gray-500" data-i18n="cert.2.org">Udemy - 2024</p>
+                        <p class="text-gray-700" data-i18n="cert.2.desc">Comprehensive introduction to programming with Python and essential technologies such as HTML, CSS, MySQL, Flask, and RESTful APIs.</p>
                     </div>
                 </div>
                 <div class="flex items-center gap-4 bg-gray-50 p-4 rounded-lg shadow mb-4">
                     <img class="w-48 h-auto rounded-lg" src="https://i.postimg.cc/ZKvSdGgQ/Certificado3-page-0001.jpg" alt="Driver Certificate">
                     <div>
-                        <h3 class="text-lg font-bold">Driver Development with STM32</h3>
-                        <p class="text-gray-500">Elio Zepeda Sanchez - 2024</p>
-                        <p class="text-gray-700">Development of drivers for STM32 microcontrollers, a widely used platform in embedded systems.</p>
+                        <h3 class="text-lg font-bold" data-i18n="cert.3.title">Driver Development with STM32</h3>
+                        <p class="text-gray-500" data-i18n="cert.3.org">Elio Zepeda Sanchez - 2024</p>
+                        <p class="text-gray-700" data-i18n="cert.3.desc">Development of drivers for STM32 microcontrollers, a widely used platform in embedded systems.</p>
                     </div>
                 </div>
             </div>
@@ -296,14 +377,14 @@
         <!-- Contacto -->
         <section class="card fade-in text-center">
             <h2 class="section-title" data-i18n="section.contact">Contact</h2>
-            <p class="mt-4 text-gray-700">Email: <a href="mailto:trevi2234@hotmail.com" class="text-blue-500">trevi2234@hotmail.com</a></p>
-                <p class="mt-2 text-gray-700">Whatsapp: <a href="https://wa.me/5213121432958" class="text-blue-500">+52 312 143 2958</a></p>
-                <p class="mt-2 text-gray-700">Teléfono: <a href="tel:3337181916" class="text-blue-500">3337181916</a></p>
+            <p class="mt-4 text-gray-700"><span data-i18n="contact.emailLabel">Email:</span> <a href="mailto:trevi2234@hotmail.com" class="text-blue-500">trevi2234@hotmail.com</a></p>
+                <p class="mt-2 text-gray-700"><span data-i18n="contact.whatsappLabel">Whatsapp:</span> <a href="https://wa.me/5213121432958" class="text-blue-500">+52 312 143 2958</a></p>
+                <p class="mt-2 text-gray-700"><span data-i18n="contact.phoneLabel">Phone:</span> <a href="tel:3337181916" class="text-blue-500">3337181916</a></p>
         </section>
             
         <!-- Botón para descargar PDF -->
         <div class="text-center mt-6">
-            <button id="download-pdf-btn" class="download-btn" onclick="downloadPDF()" data-i18n="button.pdf">Download PDF</button>
+            <button id="download-pdf-btn" class="download-btn" onclick="downloadPDF()" data-i18n="button.pdf" aria-label="Download CV as PDF">Download PDF</button>
         </div>
 
         <!-- Modal de contacto -->
@@ -331,19 +412,58 @@
         
         function downloadPDF() {
             const { jsPDF } = window.jspdf;  // Cargamos jsPDF
-            html2canvas(document.getElementById('cv-container'), { scale: 2 }).then((canvas) => {
-                const pdf = new jsPDF('p', 'mm', 'a4');  // Usamos A4 para asegurar el tamaño correcto
-                const imgData = canvas.toDataURL('image/png');
+            const element = document.getElementById('cv-container');
+            // show visual feedback while rendering
+            const btn = document.getElementById('download-pdf-btn');
+            if (btn) { btn.disabled = true; btn.innerText = 'Preparing...'; }
 
-                // Establecer márgenes y agregar imagen al PDF
-                const margin = 10;
-                const pageWidth = pdf.internal.pageSize.getWidth();
-                const pageHeight = pdf.internal.pageSize.getHeight();
-                const imgWidth = pageWidth - 2 * margin;
-                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+            html2canvas(element, { scale: 2, useCORS: true }).then((canvas) => {
+                try {
+                    const imgData = canvas.toDataURL('image/png');
+                    const pdf = new jsPDF('p', 'mm', 'a4');
 
-                pdf.addImage(imgData, 'PNG', margin, margin, imgWidth, imgHeight);
-                pdf.save('cv-jose-francisco.pdf');
+                    const pdfWidth = pdf.internal.pageSize.getWidth();
+                    const pdfHeight = pdf.internal.pageSize.getHeight();
+
+                    // image width set to page width (with small margins)
+                    const margin = 8;
+                    const imgWidth = pdfWidth - margin * 2;
+                    const imgProps = { width: canvas.width, height: canvas.height };
+                    const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
+
+                    let heightLeft = imgHeight;
+                    let position = margin;
+
+                    // add first page
+                    pdf.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+                    heightLeft -= pdfHeight;
+
+                    // add remaining pages if the content is taller than one page
+                    while (heightLeft > -pdfHeight) {
+                        pdf.addPage();
+                        position = heightLeft - imgHeight + margin;
+                        pdf.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+                        heightLeft -= pdfHeight;
+                    }
+
+                    pdf.save('cv-jose-francisco.pdf');
+                } catch (err) {
+                    // fallback: open image in new tab for manual save
+                    console.error('PDF generation failed, opening image fallback', err);
+                    const img = canvas.toDataURL('image/png');
+                    const w = window.open('about:blank');
+                    if (w) {
+                        w.document.write(`<img src="${img}" style="width:100%">`);
+                    } else {
+                        alert('Could not open new tab. Please allow popups or try again.');
+                    }
+                } finally {
+                    if (btn) { btn.disabled = false; btn.innerText = translations[currentLang]['button.pdf'] || 'Download PDF'; }
+                }
+            }).catch((err) => {
+                console.error('html2canvas error', err);
+                alert('Could not render the CV to PDF in this browser. As a fallback, please use Print → Save as PDF.');
+                if (btn) { btn.disabled = false; btn.innerText = translations[currentLang]['button.pdf'] || 'Download PDF'; }
             });
         }
         
@@ -411,6 +531,48 @@
                 "job.current.title": "Installer & Integration (Current)",
                 "job.current.date": "Since 15/09/2025 - Present",
                 "job.current.desc": "Installation and configuration of security and monitoring devices: GPS, DVRs and cameras; testing, commissioning and integration with remote monitoring systems."
+                ,
+                "education.institution": "Tecnológico de Colima",
+                "education.degree": "Mechatronics Engineer - 2025",
+                "education.desc": "Training in automation, robotics, and systems control, with a focus on developing technological solutions to optimize industrial processes.",
+                "competency.li1": "Teamwork and communication skills",
+                "competency.li2": "Design and control of automated systems",
+                "competency.li3": "Handling of PLCs and industrial control systems",
+                "competency.li4": "Experience with sensors",
+                "competency.li5": "Programming in Python and C",
+                "competency.li6": "Adaptability and willingness to learn new technologies",
+                "job.petroil.title": "Petroil",
+                "job.petroil.date": "Intern - 03/02/2025",
+                "job.petroil.desc": "Installation of dispensers according to client requirements, verifying electrical, hydraulic, and control connections, and configuring parameters for proper operation.",
+                "job.cim.title": "Centro de Innovación y Manufactura (CIM)",
+                "job.cim.date": "Workshop Assistant - 14/02/2024",
+                "job.cim.desc": "Responsible for organizing and maintaining the workshop to ensure an efficient and safe working environment.",
+                "project.1.title": "Robotic Arm for Box Size Classification",
+                "project.1.desc": "Design and programming of a robotic arm controlled by microcontrollers to classify boxes by size, using sensors to identify dimensions and automate the classification process.",
+                "project.2.title": "Standardization of Dispenser Installation",
+                "project.2.desc": "The project involved creating and implementing a standardized process for dispenser installation, achieving greater efficiency, quality, and regulatory compliance.",
+                "project.3.title": "Remote Monitoring of Environmental Conditions in Plants",
+                "project.3.desc": "Development of a remote monitoring system for four plants, measuring humidity, temperature, and heat index. Data was integrated into an interactive graphical interface using PySide6, enabling real-time visualization and efficient environmental management.",
+                "project.4.title": "Design and Development of an Assisted Chair with Actuators",
+                "project.4.desc": "Design and construction of a chair equipped with actuators controlled by an integrated button panel. The system allows the seat to lift, assisting people with reduced mobility in standing up.",
+                "project.5.title": "Kitchen Safety System with Physical Emulation",
+                "project.5.desc": "Development of a kitchen safety system using three sensors (gas, temperature, and smoke), an alarm, and actuators that respond automatically in emergencies to mitigate risks.",
+                "project.6.title": "Temperature Control System for an Incubator with Lighting",
+                "project.6.desc": "Implementation of a temperature control system for an incubator, using temperature sensors and a light bulb that regulates heat and light to maintain optimal conditions.",
+                "project.7.title": "Automation of Pneumatic Station with PLCs",
+                "project.7.desc": "Automation project for a pneumatic station using programmable logic controllers (PLCs) to optimize the station's control and operation.",
+                "cert.1.title": "Practical Qt/PySide Course: Graphical Interfaces with Python",
+                "cert.1.org": "Udemy - 2024",
+                "cert.1.desc": "Multiple graphical projects, developing interactive applications with an attractive visual interface.",
+                "cert.2.title": "Python Without Borders: HTML, CSS, Flask, and MySQL",
+                "cert.2.org": "Udemy - 2024",
+                "cert.2.desc": "Comprehensive introduction to programming with Python and essential technologies such as HTML, CSS, MySQL, Flask, and RESTful APIs.",
+                "cert.3.title": "Driver Development with STM32",
+                "cert.3.org": "Elio Zepeda Sanchez - 2024",
+                "cert.3.desc": "Development of drivers for STM32 microcontrollers, a widely used platform in embedded systems.",
+                "contact.emailLabel": "Email:",
+                "contact.whatsappLabel": "Whatsapp:",
+                "contact.phoneLabel": "Phone:"
             },
             es: {
                 "header.subtitle": "Ingeniero Mecatrónico | Especialización en Sistemas Mecatrónicos e Industria 4.0",
@@ -432,8 +594,65 @@
                 "job.current.title": "Instalador e Integración (Actual)",
                 "job.current.date": "Desde 15/09/2025 - Presente",
                 "job.current.desc": "Instalación y configuración de dispositivos de seguridad y monitoreo: GPS, DVRs y cámaras; pruebas, puesta en marcha e integración con sistemas de monitoreo remoto."
+                ,
+                "education.institution": "Tecnológico de Colima",
+                "education.degree": "Ingeniero en Mecatrónica - 2025",
+                "education.desc": "Formación en automatización, robótica y control de sistemas, con enfoque en desarrollar soluciones tecnológicas para optimizar procesos industriales.",
+                "competency.li1": "Trabajo en equipo y habilidades de comunicación",
+                "competency.li2": "Diseño y control de sistemas automatizados",
+                "competency.li3": "Manejo de PLCs y sistemas de control industrial",
+                "competency.li4": "Experiencia con sensores",
+                "competency.li5": "Programación en Python y C",
+                "competency.li6": "Adaptabilidad y disposición para aprender nuevas tecnologías",
+                "job.petroil.title": "Petroil",
+                "job.petroil.date": "Practicante - 03/02/2025",
+                "job.petroil.desc": "Instalación de despachadores según requerimientos del cliente, verificando conexiones eléctricas, hidráulicas y de control, y configurando parámetros para su correcto funcionamiento.",
+                "job.cim.title": "Centro de Innovación y Manufactura (CIM)",
+                "job.cim.date": "Prestamista social - 14/02/2024",
+                "job.cim.desc": "Responsable de organizar y mantener el taller para garantizar un entorno de trabajo eficiente y seguro.",
+                "project.1.title": "Brazo robótico para clasificación de cajas por tamaño",
+                "project.1.desc": "Diseño y programación de un brazo robótico controlado por microcontroladores para clasificar cajas por tamaño, utilizando sensores para identificar dimensiones y automatizar el proceso de clasificación.",
+                "project.2.title": "Estandarización de la instalación de despachadores",
+                "project.2.desc": "El proyecto consistió en crear e implementar un proceso estandarizado para la instalación de despachadores, logrando mayor eficiencia, calidad y cumplimiento normativo.",
+                "project.3.title": "Monitoreo remoto de condiciones ambientales en plantas",
+                "project.3.desc": "Desarrollo de un sistema de monitoreo remoto para cuatro plantas, midiendo humedad, temperatura e índice de calor. Los datos se integraron en una interfaz gráfica interactiva usando PySide6.",
+                "project.4.title": "Diseño y desarrollo de una silla asistida con actuadores",
+                "project.4.desc": "Diseño y construcción de una silla equipada con actuadores controlados por un panel de botones integrado, que permite elevar el asiento para ayudar a personas con movilidad reducida a ponerse de pie.",
+                "project.5.title": "Sistema de seguridad para cocina con emulación física",
+                "project.5.desc": "Desarrollo de un sistema de seguridad para cocina usando tres sensores (gas, temperatura y humo), una alarma y actuadores que responden automáticamente en emergencias.",
+                "project.6.title": "Control de temperatura para incubadora con iluminación",
+                "project.6.desc": "Implementación de un sistema de control de temperatura para una incubadora, usando sensores de temperatura y una lámpara que regula calor y luz para mantener condiciones óptimas.",
+                "project.7.title": "Automatización de estación neumática con PLCs",
+                "project.7.desc": "Proyecto de automatización para una estación neumática usando controladores lógicos programables (PLCs) para optimizar su control y operación.",
+                "cert.1.title": "Curso práctico Qt/PySide: Interfaces gráficas con Python",
+                "cert.1.org": "Udemy - 2024",
+                "cert.1.desc": "Múltiples proyectos gráficos, desarrollando aplicaciones interactivas con una interfaz visual atractiva.",
+                "cert.2.title": "Python Without Borders: HTML, CSS, Flask y MySQL",
+                "cert.2.org": "Udemy - 2024",
+                "cert.2.desc": "Introducción completa a la programación con Python y tecnologías esenciales como HTML, CSS, MySQL, Flask y APIs REST.",
+                "cert.3.title": "Desarrollo de drivers con STM32",
+                "cert.3.org": "Elio Zepeda Sanchez - 2024",
+                "cert.3.desc": "Desarrollo de drivers para microcontroladores STM32, una plataforma ampliamente usada en sistemas embebidos.",
+                "contact.emailLabel": "Email:",
+                "contact.whatsappLabel": "Whatsapp:",
+                "contact.phoneLabel": "Teléfono:"
             }
         };
+
+        // Add framework translations (ensure keys exist for both languages)
+        translations.en['section.frameworks'] = 'Frameworks & Tools';
+        translations.en['framework.docker'] = 'Docker';
+        translations.en['framework.fastapi'] = 'FastAPI';
+        translations.en['framework.pyside'] = 'PySide';
+        translations.en['framework.laragon'] = 'Laragon';
+        translations.en['framework.laravel'] = 'Laravel';
+
+        translations.es['section.frameworks'] = 'Frameworks y herramientas';
+        translations.es['framework.docker'] = 'Docker';
+        translations.es['framework.fastapi'] = 'FastAPI';
+        translations.es['framework.pyside'] = 'PySide';
+        translations.es['framework.laragon'] = 'Laragon';
+        translations.es['framework.laravel'] = 'Laravel';
 
         let currentLang = 'en';
 
@@ -478,7 +697,10 @@
 
                 // update lang toggle button label
                 const toggle = document.getElementById('lang-toggle');
-                if (toggle) toggle.innerText = (lang === 'en') ? 'ES' : 'EN';
+                if (toggle) {
+                    toggle.innerText = (lang === 'en') ? 'ES' : 'EN';
+                    toggle.setAttribute('aria-pressed', (lang === 'es').toString());
+                }
                 // persist selection
                 try { localStorage.setItem('cv_lang', lang); } catch(e){}
                 // update document language attribute
