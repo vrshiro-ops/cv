@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi CV Online</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@3.2.0/dist/email.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-image: url('https://i.postimg.cc/Y9JqchT2/buenaa.jpg');
+            background-size: cover;
+            background-position: center;
+            color: #333;
+            overflow-x: hidden;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .profile-image {
+            transition: transform 0.3s ease;
+        }
+        .profile-image:hover {
+            transform: scale(1.1);
+        }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2563eb;
+        }
+        .card {
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(16, 24, 40, 0.12);
+            padding: 22px;
+            background-color: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(15, 23, 42, 0.04);
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeInSection 0.9s forwards;
+        }
+        @keyframes fadeInSection {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .card-header {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #4B8BBE;
+        }
+        .card-body {
+            font-size: 1rem;
+            color: #555;
+        }
+        @media (max-width: 640px) {
+            body { background-size: cover; }
+            #cv-container { padding: 16px; margin-top: 18px; }
+            .profile-image { width: 120px; height: 120px; }
+            .text-4xl { font-size: 1.75rem; }
+            .section-title { font-size: 1.25rem; }
+            .card { padding: 16px; }
+            .skills-tag { padding: 6px 10px; font-size: 0.9rem; }
+        }
+        .header {
+            padding: 26px 18px 8px 18px;
+            border-radius: 10px;
+            background: linear-gradient(90deg, rgba(37,99,235,0.08), rgba(75,139,190,0.04));
+            margin-bottom: 14px;
+        }
+        .skills-tag {
+            padding: 8px 12px;
+            background-color: #4B8BBE;
+            color: white;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+        .skills-tag:hover {
+            background-color: #2563eb;
+            transform: scale(1.1);
+            transition: 0.3s;
+        }
+        .download-btn {
+            padding: 12px 24px;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            box-shadow: 0 6px 18px rgba(37,99,235,0.18);
+        }
+        .download-btn:hover {
+            transform: scale(1.1);
+            background-color: #1d4ed8;
+        }
+        #scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px;
+            background-color: #2563eb;
+            color: white;
+            border-radius: 50%;
+            display: none;
+            cursor: pointer;
+        }
+        #scroll-to-top:hover {
+            background-color: #1d4ed8;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 30px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+    <div id="cv-container" class="max-w-4xl mx-auto mt-10 p-8 bg-white shadow-lg rounded-lg fade-in">
+        <!-- Sección de Presentación -->
+        <div class="flex items-start justify-between header">
+            <div class="text-center">
+            <img class="w-40 h-40 mx-auto rounded-full border-4 border-blue-500 profile-image" src="https://i.postimg.cc/7LtYnZpB/foto.jpg" alt="Foto de perfil">
+            <h1 class="text-4xl font-bold mt-4 text-blue-600">Jose Francisco Treviño Garcia</h1>
+            <p class="text-lg text-gray-600" data-i18n="header.subtitle">Mechatronics Engineer | Specialization in Mechatronic Systems and Industry 4.0</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <button id="lang-toggle" class="download-btn" title="Change language">ES</button>
+            </div>
+        </div>
+        
+        <!-- Perfil -->
+        <section class="card fade-in">
+            <h2 class="section-title" data-i18n="section.profile">Profile</h2>
+                <p class="mt-4" data-i18n="profile.text">I'm a proactive individual with a strong passion for new technologies, particularly in automation, control systems, and programming. My focus is on continuous learning and the application of innovative solutions to optimize processes. I enjoy working on projects that involve the development and improvement of automated systems, leveraging the latest technological tools.</p>
+        </section>
+
+        <!-- Educación -->
+        <section class="card fade-in">
+            <h2 class="section-title" data-i18n="section.education">Education</h2>
+            <div class="card-body">
+                <h3 class="card-header">Tecnológico de Colima</h3>
+                <p class="text-gray-500">Mechatronics Engineer - 2025</p>
+                <p>Training in automation, robotics, and systems control, with a focus on developing technological solutions to optimize industrial processes.</p>
+            </div>
+        </section>   
+
+        <!-- Competencias -->
+        <section class="card fade-in">
+            <h2 class="section-title" data-i18n="section.competencies">Competencies</h2>
+            <ul class="mt-4 list-disc list-inside text-gray-700">
+                <li>Teamwork and communication skills</li>
+                <li>Design and control of automated systems</li>
+                <li>Handling of PLCs and industrial control systems</li>
+                <li>Experience with sensors</li>
+                <li>Programming in Python and C</li>
+                <li>Adaptability and willingness to learn new technologies</li>
+            </ul>
+        </section>
+
+        <!-- Experiencia -->
+        <section class="card fade-in">
+            <h2 class="section-title" data-i18n="section.work">Work Experience</h2>
+            <div class="card-body">
+                <h3 class="card-header" data-i18n="job.current.title">Installer & Integration (Current)</h3>
+                <p class="text-gray-500" data-i18n="job.current.date">Since 15/09/2025 - Present</p>
+                <p data-i18n="job.current.desc">Installation and configuration of security and monitoring devices: GPS, DVRs and cameras; testing, commissioning and integration with remote monitoring systems.</p>
+                
+                <h3 class="card-header">Petroil</h3>
+                <p class="text-gray-500">Practicante - 03/02/2025</p>
+                <p>Installation of dispensers according to client requirements, verifying electrical, hydraulic, and control connections, and configuring parameters for proper operation.</p>
+                
+                <h3 class="card-header mt-4">Centro de Innovación y Manufactura (CIM)</h3>
+                <p class="text-gray-500">Prestamista social - 14/02/2024</p>
+                <p>Responsible for organizing and maintaining the workshop to ensure an efficient and safe working environment.</p>
+            </div>
+        </section>
+
+        <!-- Habilidades -->
+        <section class="card fade-in">
+            <h2 class="section-title" data-i18n="section.skills">Skills</h2>
+            <div class="flex flex-wrap gap-2">
+                <span class="skills-tag">HTML</span>
+                <span class="skills-tag">SQL</span>
+                <span class="skills-tag">Python</span>
+                <span class="skills-tag">Pyside</span>
+                <span class="skills-tag">C</span>
+                <span class="skills-tag">Embedded</span>
+                    <span class="skills-tag">PHP</span>
+            </div>
+        </section>
+
+        <!-- Proyectos -->
+        <section class="card fade-in">
+            <h2 class="section-title" data-i18n="section.projects">Projects</h2>
+            <div class="card-body">
+                <h3 class="card-header">Robotic Arm for Box Size Classification</h3>
+                <p>Design and programming of a robotic arm controlled by microcontrollers to classify boxes by size, using sensors to identify dimensions and automate the classification process.</p>
+                
+                <h3 class="card-header mt-4">Standardization of Dispenser Installation</h3>
+                <p>The project involved creating and implementing a standardized process for dispenser installation, achieving greater efficiency, quality, and regulatory compliance.</p>
+                
+                <h3 class="card-header mt-4">Remote Monitoring of Environmental Conditions in Plants</h3>
+                <p>Development of a remote monitoring system for four plants, measuring humidity, temperature, and heat index. Data was integrated into an interactive graphical interface using PySide6, enabling real-time visualization and efficient environmental management.</p>
+                
+                <h3 class="card-header mt-4">Design and Development of an Assisted Chair with Actuators</h3>
+                <p>Design and construction of a chair equipped with actuators controlled by an integrated button panel. The system allows the seat to lift, assisting people with reduced mobility in standing up.</p>
+                
+                <h3 class="card-header mt-4">Kitchen Safety System with Physical Emulation</h3>
+                <p>Development of a kitchen safety system using three sensors (gas, temperature, and smoke), an alarm, and actuators that respond automatically in emergencies to mitigate risks.</p>
+                
+                <h3 class="card-header mt-4">Temperature Control System for an Incubator with Lighting</h3>
+                <p>Implementation of a temperature control system for an incubator, using temperature sensors and a light bulb that regulates heat and light to maintain optimal conditions.</p>
+                
+                <h3 class="card-header mt-4">Automation of Pneumatic Station with PLCs</h3>
+                <p>Automation project for a pneumatic station using programmable logic controllers (PLCs) to optimize the station's control and operation.</p>
+            </div>
+        </section>
+
+        <!-- Certificates -->
+        <section class="card fade-in">
+            <h2 class="section-title" data-i18n="section.certificates">Certificates</h2>
+            <div class="card-body">
+                <div class="flex items-center gap-4 bg-gray-50 p-4 rounded-lg shadow mb-4">
+                    <img class="w-48 h-auto rounded-lg" src="https://i.postimg.cc/VkSd5ZBs/Certificado1.jpg" alt="Python Certificate">
+                    <div>
+                        <h3 class="text-lg font-bold">Practical Qt/PySide Course: Graphical Interfaces with Python</h3>
+                        <p class="text-gray-500">Udemy - 2024</p>
+                        <p class="text-gray-700">Multiple graphical projects, developing interactive applications with an attractive visual interface.</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4 bg-gray-50 p-4 rounded-lg shadow mb-4">
+                    <img class="w-48 h-auto rounded-lg" src="https://i.postimg.cc/MKnWYMcd/Certificado2.jpg" alt="Python Certificate">
+                    <div>
+                        <h3 class="text-lg font-bold">Python Without Borders: HTML, CSS, Flask, and MySQL</h3>
+                        <p class="text-gray-500">Udemy - 2024</p>
+                        <p class="text-gray-700">Comprehensive introduction to programming with Python and essential technologies such as HTML, CSS, MySQL, Flask, and RESTful APIs.</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4 bg-gray-50 p-4 rounded-lg shadow mb-4">
+                    <img class="w-48 h-auto rounded-lg" src="https://i.postimg.cc/ZKvSdGgQ/Certificado3-page-0001.jpg" alt="Driver Certificate">
+                    <div>
+                        <h3 class="text-lg font-bold">Driver Development with STM32</h3>
+                        <p class="text-gray-500">Elio Zepeda Sanchez - 2024</p>
+                        <p class="text-gray-700">Development of drivers for STM32 microcontrollers, a widely used platform in embedded systems.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Contacto -->
+        <section class="card fade-in text-center">
+            <h2 class="section-title" data-i18n="section.contact">Contact</h2>
+            <p class="mt-4 text-gray-700">Email: <a href="mailto:trevi2234@hotmail.com" class="text-blue-500">trevi2234@hotmail.com</a></p>
+                <p class="mt-2 text-gray-700">Whatsapp: <a href="https://wa.me/5213121432958" class="text-blue-500">+52 312 143 2958</a></p>
+                <p class="mt-2 text-gray-700">Teléfono: <a href="tel:3337181916" class="text-blue-500">3337181916</a></p>
+        </section>
+            
+        <!-- Botón para descargar PDF -->
+        <div class="text-center mt-6">
+            <button id="download-pdf-btn" class="download-btn" onclick="downloadPDF()" data-i18n="button.pdf">Download PDF</button>
+        </div>
+
+        <!-- Modal de contacto -->
+        <button onclick="toggleModal()" class="download-btn mt-4" data-i18n="button.contact">Contact</button>
+        <div id="contact-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="toggleModal()">×</span>
+                <h2>Contacto</h2>
+                <form id="contact-form">
+                    <input type="text" id="name" placeholder="Your name" data-i18n-placeholder="modal.name" required>
+                    <input type="email" id="email" placeholder="Your email" data-i18n-placeholder="modal.email" required>
+                    <textarea id="message" placeholder="Your message" data-i18n-placeholder="modal.message" required></textarea>
+                    <button type="submit" data-i18n="modal.send">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <button id="scroll-to-top" onclick="scrollToTop()">↑</button>
+    
+    <script>
+        
+        // Inicializa EmailJS con tu USER ID
+        emailjs.init('203cKN4iBhlAWXM5h');  // Reemplaza 'YOUR_USER_ID' con tu User ID de EmailJS        
+        
+        function downloadPDF() {
+            const { jsPDF } = window.jspdf;  // Cargamos jsPDF
+            html2canvas(document.getElementById('cv-container'), { scale: 2 }).then((canvas) => {
+                const pdf = new jsPDF('p', 'mm', 'a4');  // Usamos A4 para asegurar el tamaño correcto
+                const imgData = canvas.toDataURL('image/png');
+
+                // Establecer márgenes y agregar imagen al PDF
+                const margin = 10;
+                const pageWidth = pdf.internal.pageSize.getWidth();
+                const pageHeight = pdf.internal.pageSize.getHeight();
+                const imgWidth = pageWidth - 2 * margin;
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+                pdf.addImage(imgData, 'PNG', margin, margin, imgWidth, imgHeight);
+                pdf.save('cv-jose-francisco.pdf');
+            });
+        }
+        
+        function toggleModal() {
+            const modal = document.getElementById('contact-modal');
+            modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
+        }
+        window.onscroll = function() {
+            const button = document.getElementById('scroll-to-top');
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                button.style.display = 'block';
+            } else {
+                button.style.display = 'none';
+            }
+        };
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Función para enviar el formulario por email usando EmailJS
+        document.getElementById("contact-form").addEventListener("submit", function(event) {
+            event.preventDefault(); 
+
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const message = document.getElementById("message").value;
+
+            const templateParams = {
+                name: name,
+                email: email,
+                message: message
+            };
+
+            emailjs.send('service_uijzq54', 'template_jwl07uf', templateParams)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    alert("Your message has been sent.");
+                    toggleModal(); 
+                }, function(error) {
+                    console.log('FAILED...', error);
+                    alert("There was a problem sending your message. Please try again.");
+                });
+        });
+        
+        // Translations for English and Spanish
+        const translations = {
+            en: {
+                "header.subtitle": "Mechatronics Engineer | Specialization in Mechatronic Systems and Industry 4.0",
+                "section.profile": "Profile",
+                "profile.text": "I'm a proactive individual with a strong passion for new technologies, particularly in automation, control systems, and programming. My focus is on continuous learning and the application of innovative solutions to optimize processes. I enjoy working on projects that involve the development and improvement of automated systems, leveraging the latest technological tools.",
+                "section.education": "Education",
+                "section.competencies": "Competencies",
+                "section.work": "Work Experience",
+                "section.skills": "Skills",
+                "section.projects": "Projects",
+                "section.certificates": "Certificates",
+                "section.contact": "Contact",
+                "button.pdf": "Download PDF",
+                "button.contact": "Contact",
+                "modal.name": "Your name",
+                "modal.email": "Your email",
+                "modal.message": "Your message",
+                "modal.send": "Send",
+                "job.current.title": "Installer & Integration (Current)",
+                "job.current.date": "Since 15/09/2025 - Present",
+                "job.current.desc": "Installation and configuration of security and monitoring devices: GPS, DVRs and cameras; testing, commissioning and integration with remote monitoring systems."
+            },
+            es: {
+                "header.subtitle": "Ingeniero Mecatrónico | Especialización en Sistemas Mecatrónicos e Industria 4.0",
+                "section.profile": "Perfil",
+                "profile.text": "Soy una persona proactiva con gran interés en nuevas tecnologías, especialmente en automatización, sistemas de control y programación. Me enfoco en el aprendizaje continuo y en aplicar soluciones innovadoras para optimizar procesos. Disfruto trabajar en proyectos de desarrollo y mejora de sistemas automatizados, utilizando herramientas tecnológicas actuales.",
+                "section.education": "Educación",
+                "section.competencies": "Competencias",
+                "section.work": "Experiencia Laboral",
+                "section.skills": "Habilidades",
+                "section.projects": "Proyectos",
+                "section.certificates": "Certificados",
+                "section.contact": "Contacto",
+                "button.pdf": "Descargar PDF",
+                "button.contact": "Contacto",
+                "modal.name": "Tu nombre",
+                "modal.email": "Tu correo",
+                "modal.message": "Tu mensaje",
+                "modal.send": "Enviar",
+                "job.current.title": "Instalador e Integración (Actual)",
+                "job.current.date": "Desde 15/09/2025 - Presente",
+                "job.current.desc": "Instalación y configuración de dispositivos de seguridad y monitoreo: GPS, DVRs y cámaras; pruebas, puesta en marcha e integración con sistemas de monitoreo remoto."
+            }
+        };
+
+        let currentLang = 'en';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            // set text for elements with data-i18n
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) el.innerText = translations[lang][key];
+            });
+            // set placeholders for elements with data-i18n-placeholder
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (translations[lang] && translations[lang][key]) el.placeholder = translations[lang][key];
+            });
+            // update lang toggle button label
+            const toggle = document.getElementById('lang-toggle');
+            if (toggle) toggle.innerText = (lang === 'en') ? 'ES' : 'EN';
+        }
+
+        // initialize language on load
+        document.addEventListener('DOMContentLoaded', function() {
+            setLanguage(currentLang);
+            const toggle = document.getElementById('lang-toggle');
+            if (toggle) toggle.addEventListener('click', () => setLanguage(currentLang === 'en' ? 'es' : 'en'));
+        });
+        
+    </script>
+</body>
+</html>
